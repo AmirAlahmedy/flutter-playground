@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/quiz_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'screens/auth_wrapper.dart';
 
 Future<void> main() async {
+  // Load environment variables
+  await dotenv.load();
+
   await Supabase.initialize(
-    url: 'https://rkttdebkjsmqkqsgbdpp.supabase.co',
-    anonKey: 'sb_publishable_cJY9KDaWsOf5-N_fdH976A_SgfiTJRA',
+    url: dotenv.env['SUPABASE_URL'] ?? '',
+    anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
   );
 
   runApp(const MyApp());
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const QuizScreen(),
+      home: const AuthWrapper(),
     );
   }
 }
